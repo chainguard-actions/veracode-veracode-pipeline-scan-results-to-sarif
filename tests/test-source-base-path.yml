@@ -1,0 +1,47 @@
+name: Test source base path replacement
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Copy fixture results.json to workspace
+        run: |
+          cp "$GITHUB_WORKSPACE/tests/fixtures/results.json" "$GITHUB_WORKSPACE/results.json"
+
+      - id: action
+        uses: .
+        with:
+          pipeline-results-json: results.json
+          output-results-sarif: path-replaced.sarif
+          source-base-path-1: "com/example/:src/main/java/com/example/"
+
+      - name: Assert SARIF file was created
+        run: |
+          if [ ! -f "$GITHUB_WORKSPACE/path-replaced.sarif" ]; then
+            echo "FAIL: SARIF output file was not created"
+            exit 1
+          fi
+          echo "PASS: SARIF file exists"
+
+      - name: Assert SARIF file is valid JSON
+        run: |
+          jq empty "$GITHUB_WORKSPACE/path-replaced.sarif" || {
+            echo "FAIL: SARIF output file is not valid JSON"
+            exit 1
+          }
+          echo "PASS: SARIF file is valid JSON"
+
+      - name: Assert source path was replaced in SARIF output
+        run: |
+          URIS=$(jq -r '[.runs[0].results[].locations[].physicalLocation.artifactLocation.uri] | .[]' "$GITHUB_WORKSPACE/path-replaced.sarif")
+          echo "URIs found:"
+          echo "$URIS"
+          REPLACED=$(echo "$URIS" | grep "src/main/java/com/example/" || true)
+          if [ -z "$REPLACED" ]; then
+            echo "FAIL: no URI with replaced path 'src/main/java/com/example/' found"
+            exit 1
+          fi
+          echo "PASS: source path replacement verified in: $REPLACED"

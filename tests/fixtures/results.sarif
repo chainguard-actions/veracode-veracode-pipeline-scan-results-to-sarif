@@ -1,0 +1,70 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Veracode Pipeline Scan",
+          "version": "1.0",
+          "rules": [
+            {
+              "id": "89",
+              "name": "SQL Injection",
+              "shortDescription": {
+                "text": "Improper Neutralization of Special Elements used in an SQL Command"
+              },
+              "properties": {
+                "tags": ["security", "correctness"]
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "89",
+          "level": "error",
+          "rank": 4,
+          "message": {
+            "text": "This database query contains a SQL injection flaw."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "com/example/App.java"
+                },
+                "region": {
+                  "startLine": 42
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "processInput",
+                  "fullyQualifiedName": "com.example.App.processInput",
+                  "kind": "function"
+                },
+                {
+                  "fullyQualifiedName": "java.sql.Statement.executeQuery",
+                  "kind": "member",
+                  "parentIndex": 0
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "flawHash": "1823420291",
+            "flawHashCount": "1",
+            "flawHashOrdinal": "1",
+            "causeHash": "3589143651",
+            "causeHashCount": "1",
+            "causeHashOrdinal": "1",
+            "procedureHash": "1093809001",
+            "prototypeHash": "3964753467"
+          }
+        }
+      ]
+    }
+  ]
+}

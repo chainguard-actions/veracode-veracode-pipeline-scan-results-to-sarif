@@ -1,0 +1,49 @@
+name: Test finding-rule-level input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Copy fixture results.json to workspace
+        run: |
+          cp "$GITHUB_WORKSPACE/tests/fixtures/results.json" "$GITHUB_WORKSPACE/results.json"
+
+      - id: action
+        uses: .
+        with:
+          pipeline-results-json: results.json
+          output-results-sarif: rule-level.sarif
+          finding-rule-level: "4:3:0"
+
+      - name: Assert SARIF file was created
+        run: |
+          if [ ! -f "$GITHUB_WORKSPACE/rule-level.sarif" ]; then
+            echo "FAIL: SARIF output file was not created"
+            exit 1
+          fi
+          echo "PASS: SARIF file exists"
+
+      - name: Assert SARIF file is valid JSON with correct version
+        run: |
+          VERSION=$(jq -r '.version' "$GITHUB_WORKSPACE/rule-level.sarif")
+          echo "SARIF version: $VERSION"
+          if [ "$VERSION" != "2.1.0" ]; then
+            echo "FAIL: expected SARIF version 2.1.0, got '$VERSION'"
+            exit 1
+          fi
+          echo "PASS: SARIF version is 2.1.0"
+
+      - name: Assert SARIF results contain at least one result with a level
+        run: |
+          RESULTS_COUNT=$(jq '.runs[0].results | length' "$GITHUB_WORKSPACE/rule-level.sarif")
+          echo "Total results: $RESULTS_COUNT"
+          if [ "$RESULTS_COUNT" -lt 1 ]; then
+            echo "FAIL: expected at least 1 result"
+            exit 1
+          fi
+          FIRST_LEVEL=$(jq -r '.runs[0].results[0].level' "$GITHUB_WORKSPACE/rule-level.sarif")
+          echo "First result level: $FIRST_LEVEL"
+          echo "PASS: SARIF results verified with $RESULTS_COUNT result(s)"

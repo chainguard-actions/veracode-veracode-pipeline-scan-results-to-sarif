@@ -1,0 +1,44 @@
+name: Test SARIF file as input (SARIF-to-PipelineScanResult conversion)
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Copy fixture SARIF to workspace
+        run: |
+          cp "$GITHUB_WORKSPACE/tests/fixtures/results.sarif" "$GITHUB_WORKSPACE/input.sarif"
+
+      - id: action
+        uses: .
+        with:
+          pipeline-results-json: input.sarif
+          output-results-sarif: sarif-output.sarif
+
+      - name: Assert SARIF output file was created
+        run: |
+          if [ ! -f "$GITHUB_WORKSPACE/sarif-output.sarif" ]; then
+            echo "FAIL: output file was not created"
+            exit 1
+          fi
+          echo "PASS: output file exists"
+
+      - name: Assert output is valid JSON
+        run: |
+          jq empty "$GITHUB_WORKSPACE/sarif-output.sarif" || {
+            echo "FAIL: output file is not valid JSON"
+            exit 1
+          }
+          echo "PASS: output is valid JSON"
+
+      - name: Assert output contains findings from SARIF input
+        run: |
+          FINDINGS_COUNT=$(jq '.findings | length' "$GITHUB_WORKSPACE/sarif-output.sarif")
+          echo "findings count: $FINDINGS_COUNT"
+          if [ "$FINDINGS_COUNT" -lt 1 ]; then
+            echo "FAIL: expected at least 1 finding in output, got $FINDINGS_COUNT"
+            exit 1
+          fi
+          echo "PASS: output contains $FINDINGS_COUNT finding(s)"

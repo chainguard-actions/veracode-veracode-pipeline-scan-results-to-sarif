@@ -1,0 +1,37 @@
+name: Test custom output SARIF path
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Copy fixture results.json to workspace
+        run: |
+          cp "$GITHUB_WORKSPACE/tests/fixtures/results.json" "$GITHUB_WORKSPACE/results.json"
+          mkdir -p "$GITHUB_WORKSPACE/custom-output"
+
+      - id: action
+        uses: .
+        with:
+          pipeline-results-json: results.json
+          output-results-sarif: custom-output/my-scan.sarif
+
+      - name: Assert SARIF file was created at custom path
+        run: |
+          if [ ! -f "$GITHUB_WORKSPACE/custom-output/my-scan.sarif" ]; then
+            echo "FAIL: SARIF output file was not created at custom path"
+            exit 1
+          fi
+          echo "PASS: SARIF file exists at custom path"
+
+      - name: Assert SARIF file is valid JSON with correct version
+        run: |
+          VERSION=$(jq -r '.version' "$GITHUB_WORKSPACE/custom-output/my-scan.sarif")
+          echo "SARIF version: $VERSION"
+          if [ "$VERSION" != "2.1.0" ]; then
+            echo "FAIL: expected SARIF version 2.1.0, got '$VERSION'"
+            exit 1
+          fi
+          echo "PASS: SARIF version is 2.1.0"

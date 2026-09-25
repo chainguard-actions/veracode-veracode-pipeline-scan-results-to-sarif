@@ -1,0 +1,61 @@
+{
+   "_links": {
+      "root": {
+         "href": "/"
+      },
+      "self": {
+         "href": "/scans/319a4948-913e-4c86-a16b-08a7c142bfb4/findings"
+      }
+   },
+   "scan_id": "319a4948-913e-4c86-a16b-08a7c142bfb4",
+   "scan_status": "SUCCESS",
+   "message": "Scan successful. Results size: 1234 bytes",
+   "modules": [
+      "example.class"
+   ],
+   "modules_count": 1,
+   "findings": [
+      {
+         "title": "java.sql.Statement.executeQuery",
+         "issue_id": 1001,
+         "gob": "B",
+         "severity": 4,
+         "issue_type_id": "taint",
+         "issue_type": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+         "cwe_id": "89",
+         "display_text": "<span>This database query contains a SQL injection flaw.</span>",
+         "files": {
+            "source_file": {
+               "file": "com/example/App.java",
+               "line": 42,
+               "function_name": "processInput",
+               "qualified_function_name": "com.example.App.processInput",
+               "function_prototype": "void processInput(java.lang.String)",
+               "scope": "com.example.App"
+            }
+         },
+         "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+      },
+      {
+         "title": "java.io.PrintStream.println",
+         "issue_id": 1002,
+         "gob": "B",
+         "severity": 3,
+         "issue_type_id": "taint",
+         "issue_type": "Improper Output Neutralization for Logs",
+         "cwe_id": "117",
+         "display_text": "<span>This call to java.io.PrintStream.println() could result in a log injection vulnerability.</span>",
+         "files": {
+            "source_file": {
+               "file": "com/example/Logger.java",
+               "line": 15,
+               "function_name": "log",
+               "qualified_function_name": "com.example.Logger.log",
+               "function_prototype": "void log(java.lang.String)",
+               "scope": "com.example.Logger"
+            }
+         },
+         "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/117.html"
+      }
+   ]
+}
