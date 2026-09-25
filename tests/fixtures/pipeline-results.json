@@ -1,0 +1,49 @@
+{
+   "_links": {
+      "root": { "href": "/" },
+      "self": { "href": "/scans/319a4948-913e-4c86-a16b-08a7c142bfb4/findings" },
+      "help": { "href": "https://help.veracode.com/reader/tS9CaFwL4_lbIEWWomsJoA/ovfZGgu96UINQxIuTqRDwg" }
+   },
+   "scan_id": "319a4948-913e-4c86-a16b-08a7c142bfb4",
+   "scan_status": "SUCCESS",
+   "message": "Scan successful. Results size: 10985 bytes",
+   "modules": ["SQLvulnerability.class"],
+   "modules_count": 1,
+   "findings": [
+      {
+         "title": "java.sql.Statement.executeQuery",
+         "issue_id": 1000,
+         "gob": "B",
+         "severity": 4,
+         "issue_type_id": "taint",
+         "issue_type": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+         "cwe_id": "89",
+         "display_text": "<span>This database query contains a SQL injection flaw.</span>",
+         "files": {
+            "source_file": {
+               "file": "SQLvulnerability.java",
+               "line": 21,
+               "function_name": "main",
+               "qualified_function_name": "SQLvulnerability.main",
+               "function_prototype": "void main(java.lang.String  [])",
+               "scope": "SQLvulnerability"
+            }
+         },
+         "flaw_match": {
+            "procedure_hash": "1093809001",
+            "prototype_hash": "3964753467",
+            "flaw_hash": "1823420291",
+            "flaw_hash_count": 1,
+            "flaw_hash_ordinal": 1,
+            "cause_hash": "3589143651",
+            "cause_hash_count": 1,
+            "cause_hash_ordinal": 1,
+            "cause_hash2": "4194732763",
+            "cause_hash2_ordinal": "1"
+         },
+         "stack_dumps": {},
+         "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+      }
+   ],
+   "selected_modules": []
+}

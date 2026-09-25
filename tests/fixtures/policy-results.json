@@ -1,0 +1,51 @@
+{"_embedded": {"findings": [
+  {
+    "issue_id": 1,
+    "scan_type": "STATIC",
+    "description": "<span>This call to java.lang.ProcessBuilder.start() contains a command injection flaw.</span>",
+    "count": 1,
+    "context_type": "APPLICATION",
+    "context_guid": "b6b78e10-ba87-48af-914c-b5728a0e2830",
+    "violates_policy": true,
+    "finding_status": {
+      "first_found_date": "2024-02-21T10:00:42.464Z",
+      "status": "OPEN",
+      "resolution": "UNRESOLVED",
+      "mitigation_review_status": "NONE",
+      "new": false,
+      "resolution_status": "NONE",
+      "last_seen_date": "2024-02-28T05:29:48.287Z"
+    },
+    "finding_details": {
+      "severity": 5,
+      "cwe": {
+        "id": 78,
+        "name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+        "href": "https://api.veracode.com/appsec/v1/cwes/78"
+      },
+      "file_path": "com/scalesec/vulnado/Cowsay.java",
+      "file_name": "Cowsay.java",
+      "module": "vulnado-0.0.1-SNAPSHOT.jar",
+      "relative_location": 50,
+      "finding_category": {
+        "id": 18,
+        "name": "Command or Argument Injection",
+        "href": "https://api.veracode.com/appsec/v1/categories/18"
+      },
+      "procedure": "com.scalesec.vulnado.Cowsay.run",
+      "exploitability": 0,
+      "attack_vector": "java.lang.ProcessBuilder.start",
+      "file_line_number": 16
+    },
+    "build_id": 33321946
+  }
+]}, "_links": {
+  "self": {
+    "href": "https://api.veracode.com/appsec/v2/applications/b6b78e10-ba87-48af-914c-b5728a0e2830/findings?violates_policy=true"
+  }
+}, "page": {
+  "size": 20,
+  "total_elements": 1,
+  "total_pages": 1,
+  "number": 0
+}}
