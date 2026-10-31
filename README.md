@@ -6,10 +6,10 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 ## Versions
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v1.0.7 | [`v1.0.7`](https://github.com/chainguard-actions/veracode-veracode-pipeline-scan-results-to-sarif/tree/v1.0.7) | [`60b7700`](https://github.com/veracode/veracode-pipeline-scan-results-to-sarif/commit/60b7700da8a577f989233dc4d206233322e386eb) |
-| v2.0.5 | [`v2.0.5`](https://github.com/chainguard-actions/veracode-veracode-pipeline-scan-results-to-sarif/tree/v2.0.5) | [`a968aed`](https://github.com/veracode/veracode-pipeline-scan-results-to-sarif/commit/a968aed9d556a0af204bf6dc7f8f1884e19839bc) |
+| Version | Tag | Upstream commit | Hardening report |
+|---------|-----|-----------------|------------------|
+| v1.0.7 | [`v1.0.7`](https://github.com/chainguard-actions/veracode-veracode-pipeline-scan-results-to-sarif/tree/v1.0.7) | [`60b7700`](https://github.com/veracode/veracode-pipeline-scan-results-to-sarif/commit/60b7700da8a577f989233dc4d206233322e386eb) | [`HARDENING.md`](https://github.com/chainguard-actions/veracode-veracode-pipeline-scan-results-to-sarif/blob/v1.0.7/HARDENING.md) |
+| v2.0.5 | [`v2.0.5`](https://github.com/chainguard-actions/veracode-veracode-pipeline-scan-results-to-sarif/tree/v2.0.5) | [`a968aed`](https://github.com/veracode/veracode-pipeline-scan-results-to-sarif/commit/a968aed9d556a0af204bf6dc7f8f1884e19839bc) | [`HARDENING.md`](https://github.com/chainguard-actions/veracode-veracode-pipeline-scan-results-to-sarif/blob/v2.0.5/HARDENING.md) |
 
 ## Privacy
 
